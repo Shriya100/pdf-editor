@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Studio - Your All-in-One PDF Toolkit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <span class="sparkle">✨</span>
+                <h1 class="title">PDF Studio</h1>
+            </div>
+            <p class="subtitle">Your all-in-one PDF toolkit 💜</p>
+        </header>
+
+        <!-- Feature Tabs -->
+        <div class="features-grid" id="featuresGrid">
+            <button class="feature-btn active" data-feature="merge">
+                <span class="feature-icon">🔗</span>
+                <span class="feature-label">Merge</span>
+            </button>
+            <button class="feature-btn" data-feature="split">
+                <span class="feature-icon">✂️</span>
+                <span class="feature-label">Split</span>
+            </button>
+            <button class="feature-btn" data-feature="compress">
+                <span class="feature-icon">📦</span>
+                <span class="feature-label">Compress</span>
+            </button>
+            <button class="feature-btn" data-feature="protect">
+                <span class="feature-icon">🔒</span>
+                <span class="feature-label">Protect</span>
+            </button>
+            <button class="feature-btn" data-feature="unlock">
+                <span class="feature-icon">🔓</span>
+                <span class="feature-label">Unlock</span>
+            </button>
+            <button class="feature-btn" data-feature="convert">
+                <span class="feature-icon">🖼️</span>
+                <span class="feature-label">To Images</span>
+            </button>
+            <button class="feature-btn" data-feature="rotate">
+                <span class="feature-icon">🔄</span>
+                <span class="feature-label">Rotate</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-card">
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <h3 class="upload-title">Drop your PDFs here</h3>
+                <p class="upload-subtitle">or click to browse</p>
+                <input type="file" id="fileInput" accept="application/pdf" multiple hidden>
+            </div>
+
+            <!-- File List -->
+            <div class="file-list" id="fileList"></div>
+
+            <!-- Options Panel -->
+            <div class="options-panel" id="optionsPanel" style="display: none;">
+                <h4 class="options-title" id="optionsTitle"></h4>
+                <div id="optionsContent"></div>
+            </div>
+
+            <!-- Process Button -->
+            <button class="process-btn" id="processBtn" style="display: none;">
+                <span id="btnText">Merge PDF</span>
+                <span class="spinner" id="spinner" style="display: none;"></span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>✨ All processing happens in your browser. Your files never leave your device. 🔒</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

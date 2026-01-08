@@ -1,0 +1,33 @@
+{
+  "name": "pdf-studio",
+  "version": "1.0.0",
+  "description": "A modern, elegant PDF editor with merge, split, compress, and more features",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server",
+    "build": "echo 'No build step required for vanilla HTML/CSS/JS'"
+  },
+  "keywords": [
+    "pdf",
+    "editor",
+    "merge",
+    "split",
+    "compress",
+    "pdf-tools"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/pdf-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/pdf-studio/issues"
+  },
+  "homepage": "https://github.com/yourusername/pdf-studio#readme"
+}
