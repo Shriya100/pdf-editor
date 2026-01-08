@@ -52,12 +52,12 @@ const features = {
     protect: {
         title: '🔒 Add password protection to your PDF',
         btnText: 'Protect PDF',
-        options: '<input type="password" class="option-input" placeholder="Enter new password">'
+        options: '<input type="password" class="option-input" id="passwordInput" placeholder="Enter new password">'
     },
     unlock: {
         title: '🔓 Remove password from PDF',
         btnText: 'Unlock PDF',
-        options: '<input type="password" class="option-input" placeholder="Enter current password">'
+        options: '<input type="password" class="option-input" id="passwordInput" placeholder="Enter current password">'
     },
     convert: {
         title: '🖼️ Convert PDF pages to image files',
@@ -197,6 +197,18 @@ function updateProcessButton() {
     btnText.textContent = features[activeFeature].btnText;
 }
 
+// Download helper function
+function downloadFile(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
 async function processFiles() {
     if (files.length === 0) return;
     
@@ -204,18 +216,86 @@ async function processFiles() {
     btnText.textContent = 'Processing...';
     spinner.style.display = 'block';
     
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Success message
-    alert(`✨ ${features[activeFeature].btnText} complete! Your file is ready.`);
-    
-    // Reset
-    files = [];
-    renderFileList();
-    updateOptions();
-    processBtn.disabled = false;
-    btnText.textContent = features[activeFeature].btnText;
-    spinner.style.display = 'none';
-    processBtn.style.display = 'none';
+    try {
+        // Simulate processing for demo
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Create a simple text file as demo download
+        let resultContent = '';
+        let filename = 'output.pdf';
+        
+        switch(activeFeature) {
+            case 'merge':
+                resultContent = `DEMO: Merged PDF would contain ${files.length} files:\n\n`;
+                files.forEach((f, i) => {
+                    resultContent += `${i + 1}. ${f.name}\n`;
+                });
+                filename = 'merged.pdf';
+                break;
+                
+            case 'compress':
+                const compressLevel = document.querySelector('input[name="compress"]:checked')?.value || 'recommended';
+                resultContent = `DEMO: Compressed PDF (${compressLevel} mode)\n\n`;
+                resultContent += `Original: ${files[0].name}\n`;
+                resultContent += `Original Size: ${files[0].size} MB\n`;
+                resultContent += `Estimated Compressed Size: ${(parseFloat(files[0].size) * 0.6).toFixed(2)} MB`;
+                filename = 'compressed.pdf';
+                break;
+                
+            case 'split':
+                resultContent = `DEMO: Split ${files[0].name} into individual pages\n\n`;
+                resultContent += 'This would generate multiple PDF files, one per page.';
+                filename = 'split-pages.zip';
+                break;
+                
+            case 'protect':
+                const password = document.getElementById('passwordInput')?.value;
+                resultContent = `DEMO: Protected PDF with password\n\n`;
+                resultContent += `Original: ${files[0].name}\n`;
+                resultContent += `Password: ${password ? '********' : 'Not set'}`;
+                filename = 'protected.pdf';
+                break;
+                
+            case 'unlock':
+                resultContent = `DEMO: Unlocked PDF\n\n`;
+                resultContent += `Original: ${files[0].name}\n`;
+                resultContent += 'Password protection removed';
+                filename = 'unlocked.pdf';
+                break;
+                
+            case 'convert':
+                resultContent = `DEMO: Converted PDF to images\n\n`;
+                resultContent += `Original: ${files[0].name}\n`;
+                resultContent += 'This would generate JPG/PNG images for each page.';
+                filename = 'images.zip';
+                break;
+                
+            case 'rotate':
+                const rotation = document.querySelector('input[name="rotate"]:checked')?.value || '90';
+                resultContent = `DEMO: Rotated PDF ${rotation}°\n\n`;
+                resultContent += `Original: ${files[0].name}\n`;
+                resultContent += `Rotation: ${rotation}° ${rotation === '90' ? 'clockwise' : rotation === '-90' ? 'counter-clockwise' : ''}`;
+                filename = 'rotated.pdf';
+                break;
+        }
+        
+        // Create a blob and download
+        const blob = new Blob([resultContent], { type: 'text/plain' });
+        downloadFile(blob, filename);
+        
+        // Show success message
+        alert(`✨ ${features[activeFeature].btnText} complete!\n\n⚠️ NOTE: This is a demo version.\n\nTo process real PDFs, you need to:\n1. Add PDF-lib library to index.html\n2. See README.md for integration guide`);
+        
+    } catch (error) {
+        alert('❌ Error processing files: ' + error.message);
+    } finally {
+        // Reset
+        files = [];
+        renderFileList();
+        updateOptions();
+        processBtn.disabled = false;
+        btnText.textContent = features[activeFeature].btnText;
+        spinner.style.display = 'none';
+        processBtn.style.display = 'none';
+    }
 }
